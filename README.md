@@ -77,9 +77,9 @@ Access abilities:
     - close user orders that are unpaid.
 
 ## Launch
-- cloned from github.
-- to build need Maven and JDK-21.
-- on OS Windows may be used file from root directory of the project. To build all services -> build.bat, and to launch all services -> launch.bat.
+- clone from GitHub.
+- to build need Maven, JDK-21 and launched MySQL on port 3306.
+- on OS Windows may be used file from root directory of the project. Command to build all services -> ./build.bat, and on success to launch all services -> ./launch.bat.
 - or use one of the development environments. The project was developed using Intellij Idea.
 
 ## Testing
@@ -88,7 +88,7 @@ The projects are covered with unit and integration tests using the Mockito and J
 Full integration test may be done with Postman:
 - import file (collection of tests) from root directory to your Postman: library-test.postman_collection.json
 - create a new environment (tests will store variables in it for exchanging information)
-- launch the tests
+- run the tests
 
 The auth-service, user-service, and lib-service endpoints can be tested using the Swagger gateway bypassing the Gateway (without checking the jwt token):
 - http://localhost:8083/auth-service/swagger-ui/index.html#/
