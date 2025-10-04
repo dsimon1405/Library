@@ -1,0 +1,26 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /lib-service
+
+spring:
+  application:
+    name: lib-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/library_lib_db?createDatabaseIfNotExist=true
+    username: root
+    password: 1qazxsw2
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration

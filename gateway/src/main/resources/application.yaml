@@ -1,0 +1,43 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true          # enable Eureka dispatcher
+          lower-case-service-id: true
+
+      server:
+        webmvc:
+          routes:
+            - id: lib-service-id   # any name
+#              uri: http://localhost:8081 # change host:port http://localhost:8080/lib/book/all -> http://localhost:8081/lib/book/all
+              uri: lb://lib-service    # using eureka dispatcher by service name (not id upper)
+              predicates:
+                - Path=/lib/**                      # all with lib/** -> http://localhost:8081/lib/book/all
+              filters:
+                - StripPrefix=1                     # remove prefix /lib -> http://localhost:8081/book/all
+                - PrefixPath=/lib-service/api/v1    # add prefix -> http://localhost:8081/lib-service/api/v1/book/all
+
+            - id: auth-service
+#              uri: http://localhost:8083
+              uri: lb://auth-service
+              predicates:
+                - Path=/auth/**
+              filters:
+                - StripPrefix=1
+                - PrefixPath=/auth-service/api/v1
+
+            - id: user-service
+#              uri: http://localhost:8082
+              uri: lb://user-service
+              predicates:
+                - Path=/user/**
+              filters:
+                - StripPrefix=1
+                - PrefixPath=/user-service/api/v1
