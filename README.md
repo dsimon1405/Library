@@ -79,7 +79,7 @@ Access abilities:
 ## Launch
 - clone from GitHub.
 - to build need Maven, JDK-21 and launched MySQL on port 3306.
-- on OS Windows may be used file from root directory of the project. Command to build all services -> ./build.bat, and on success to launch all services -> ./launch.bat.
+- on OS Windows may be used file from root directory of the project. Commands to build all services [mvn clean package] or [./build.bat]. If the build is successful, the command to start all services is [./launch.bat]
 - or use one of the development environments. The project was developed using Intellij Idea.
 - 
 If the launch is successful, the registered services can be seen in Spring Eureka http://localhost:8761/
