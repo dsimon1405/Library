@@ -1,9 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/library_lib_db_test?createDatabaseIfNotExist=true
-    username: root
-    password: 1qazxsw2
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:${LIBRARY_DB_PORT:3306}/library_lib_db_test?createDatabaseIfNotExist=true
+    username: ${LIBRARY_DB_USERNAME:root}
+    password: ${LIBRARY_DB_PASSWORD:1qazxsw2}
 
   jpa:
     hibernate:

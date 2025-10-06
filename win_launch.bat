@@ -1,5 +1,14 @@
 @echo off
 
+@REM load variables from .env
+for /f "usebackq tokens=1,2 delims==" %%a in (".env") do (
+    set "%%a=%%b"
+)
+echo LIBRARY_DB_PORT=%LIBRARY_DB_PORT%
+echo LIBRARY_DB_USERNAME=%LIBRARY_DB_USERNAME%
+echo LIBRARY_DB_PASSWORD=%LIBRARY_DB_PASSWORD%
+
+
 echo Starting eureka-server
 start "" java -jar eureka-server\target\eureka-server-0.0.1-SNAPSHOT.jar
 timeout /t 10 >nul

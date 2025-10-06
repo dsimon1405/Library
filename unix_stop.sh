@@ -20,3 +20,4 @@ for service in eureka-server auth-service lib-service user-service gateway; do
 done
 
 echo "All services stopped."
+read -p "Press Enter to exit..."

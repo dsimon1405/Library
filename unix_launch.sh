@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# load variables from .env
+if [ -f .env ]; then
+  export $(grep -v '^#' .env | xargs)
+else
+  echo ".env файл не найден!"
+  exit 1
+fi
+echo "LIBRARY_DB_PORT=$LIBRARY_DB_PORT"
+echo "LIBRARY_DB_USERNAME=$LIBRARY_DB_USERNAME"
+echo "LIBRARY_DB_PASSWORD=$LIBRARY_DB_PASSWORD"
+
+
 rmdir -p unix
 mkdir -p unix/logs
 mkdir -p unix/pids
@@ -26,3 +38,4 @@ nohup java -jar gateway/target/gateway-0.0.1-SNAPSHOT.jar > unix/logs/gateway.lo
 echo $! > unix/pids/gateway.pid
 
 echo "All services started!"
+read -p "Press Enter to exit..."

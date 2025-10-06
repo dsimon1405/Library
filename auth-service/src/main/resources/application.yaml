@@ -8,9 +8,10 @@ spring:
     name: auth-service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/library_auth_db?createDatabaseIfNotExist=true
-    username: root
-    password: 1qazxsw2
+    url: jdbc:mysql://localhost:${LIBRARY_DB_PORT:3306}/library_auth_db?createDatabaseIfNotExist=true
+    username: ${LIBRARY_DB_USERNAME:root}
+    password: ${LIBRARY_DB_PASSWORD:1qazxsw2}
+#    password: 1qazxsw2
 
   jpa:
     hibernate:

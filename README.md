@@ -83,12 +83,12 @@ Access abilities:
     - close user orders that are unpaid.
 
 ## Launch
-You need to have on localhost free ports: 8080.
-
 Clone project from GitHub
 ```
 git clone https://github.com/dsimon1405/Library.git
 ```
+
+You need to have on localhost free ports: 8080.
 
 ### Docker
   - Launch docker
@@ -98,34 +98,34 @@ git clone https://github.com/dsimon1405/Library.git
       docker compose up --build
       ```
       - or in detach mode 
-      ```
-      docker compose up --build -d
-      ```
+        ```
+        docker compose up --build -d
+        ```
     - Create and launch containers (images must exist):
       ```
       docker compose up
       ``` 
       - or in detach mode
-      ```
-      docker compose up -d
-      ```
+        ```
+        docker compose up -d
+        ```
     - Start stopped containers
       ```
       docker compose start
       ```
     - Stop:
       - stop containers
-       ```
-       docker compose stop
-       ```
+        ```
+        docker compose stop
+        ```
       - stop and remove containers
-       ```
-       docker compose down
-       ```
+        ```
+        docker compose down
+        ```
       - stop and remove containers, images, volumes
-       ```
-       docker compose down --rmi all --volumes --remove-orphans
-       ```
+        ```
+        docker compose down --rmi all --volumes --remove-orphans
+        ```
   
     By default, all services use open ports on the localhost. Therefore, these ports must be available.
     Alternatively, you can comment out all the ports (8081:8081, 8082:8082, 8083:8083, 8761:8761, 3307:3306,
@@ -137,26 +137,30 @@ git clone https://github.com/dsimon1405/Library.git
     ```
     
 ### Windows
-  - Need Maven 3.9.11, JDK-21 and launched MySQL on port 3306
+  - Need Maven 3.9.11, JDK-21 and launched MySQL
   - Build
     ```
     ./win_build.bat
     ```
-  - Launch
-    ```
-    ./win_launch.bat
-    ```
+  - Launch:
+    - Important! Change the variables in [.env](.env) to the actual ones for your MySQL database.
+    - start  command
+      ```
+      ./win_launch.bat
+      ```
   - To stop, close all open command prompt windows.
 ### Linux
-  - Need Maven 3.9.11, JDK-21 and launched MySQL on port 3306
+  - Need Maven 3.9.11, JDK-21 and launched MySQL
   - Build
     ```
     bash unix_build.sh
     ```
   - Launch
-    ```
-    bash unix_launch.sh
-    ```
+    - Important! Change the variables in [.env](.env) to the actual ones for your MySQL database.
+    - start command
+      ```
+      bash unix_launch.sh
+      ```
     The launch will create/recreate the /unix/logs folder, which will contain *.log files for each running service.
     This will be used for tracking logs.
   - Stop
@@ -173,9 +177,9 @@ The projects are covered with unit and integration tests using the Mockito and J
 
 ### Postman - performs full integration testing
 - import file (collection of tests) from root directory to your Postman
-    ```
-    library-test.postman_collection.json
-    ```
+  ```
+  library-test.postman_collection.json
+  ```
 - create a new environment (tests will store variables in it for exchanging information)
 - run the tests
 #### If you're running services in a Docker container, please note that the [docker-compose.yml](docker-compose.yml) uses localization. For tests to run correctly, it must match the localization of the environment where Postman is running:
