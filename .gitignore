@@ -1,9 +1,3 @@
-auth-service/target
-common/target
-eureka-server/target
-gateway/target
-lib-service/target
-user-service/target
 HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
@@ -37,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+
+unix

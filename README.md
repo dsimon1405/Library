@@ -3,7 +3,7 @@ Api for managing library.
 Includes 5 microservices: gateway, lib-service, auth-service, user-service, eureka-server.
 And one more library which store common information for other services.
 
-Using technologies:
+Technologies:
 - jdk-21
 - maven
 - Sping boot:
@@ -25,6 +25,12 @@ Testing:
 - Unit, integration (Junit, Mockito)
 - Postman
 - Swagger
+
+Launch:
+- Docker
+- Windows (bat files)
+- Unix (sh files)
+
 
 ## Gateway service
 Gateway is common entry point for communication with other services. Locates on http://localhost:8080.
@@ -77,22 +83,108 @@ Access abilities:
     - close user orders that are unpaid.
 
 ## Launch
-- clone from GitHub.
-- to build need Maven, JDK-21 and launched MySQL on port 3306.
-- on OS Windows may be used file from root directory of the project. Commands to build all services [mvn clean package] or [./build.bat]. If the build is successful, the command to start all services is [./launch.bat]
-- or use one of the development environments. The project was developed using Intellij Idea.
-- 
-If the launch is successful, the registered services can be seen in Spring Eureka http://localhost:8761/
+You need to have on localhost free ports: 8080.
+
+Clone project from GitHub
+```
+git clone https://github.com/dsimon1405/Library.git
+```
+
+### Docker
+  - Launch docker
+  - Commands to build, make images and run containers of all services
+    - Build images, create and launch containers:
+      ```
+      docker compose up --build
+      ```
+      - or in detach mode 
+      ```
+      docker compose up --build -d
+      ```
+    - Create and launch containers (images must exist):
+      ```
+      docker compose up
+      ``` 
+      - or in detach mode
+      ```
+      docker compose up -d
+      ```
+    - Start stopped containers
+      ```
+      docker compose start
+      ```
+    - Stop:
+      - stop containers
+       ```
+       docker compose stop
+       ```
+      - stop and remove containers
+       ```
+       docker compose down
+       ```
+      - stop and remove containers, images, volumes
+       ```
+       docker compose down --rmi all --volumes --remove-orphans
+       ```
+  
+    By default, all services use open ports on the localhost. Therefore, these ports must be available.
+    Alternatively, you can comment out all the ports (8081:8081, 8082:8082, 8083:8083, 8761:8761, 3307:3306,
+    EXCEPT 8080) and the corresponding port: lines above them in the docker-compose.yml file, since they are not
+    required for the proper functioning of the services and are only needed for testing. After that, run the command
+    to recreate and start the containers.
+    ```
+    docker compose up --force-recreate
+    ```
+    
+### Windows
+  - Need Maven 3.9.11, JDK-21 and launched MySQL on port 3306
+  - Build
+    ```
+    ./win_build.bat
+    ```
+  - Launch
+    ```
+    ./win_launch.bat
+    ```
+  - To stop, close all open command prompt windows.
+### Linux
+  - Need Maven 3.9.11, JDK-21 and launched MySQL on port 3306
+  - Build
+    ```
+    bash unix_build.sh
+    ```
+  - Launch
+    ```
+    bash unix_launch.sh
+    ```
+    The launch will create/recreate the /unix/logs folder, which will contain *.log files for each running service.
+    This will be used for tracking logs.
+  - Stop
+    ```
+    bash unix_stop.sh
+    ```
+
+### Or use one of the development environments. The project was developed using Intellij Idea.
+
+### If the startup was successful, registered services can be seen in Spring Eureka at http://localhost:8761/ When using Docker, port 8761 should not be committed in [docker-compose.yml].
 
 ## Testing
 The projects are covered with unit and integration tests using the Mockito and Junit frameworks.
 
-Full integration test may be done with Postman:
-- import file (collection of tests) from root directory to your Postman: library-test.postman_collection.json
+### Postman - performs full integration testing
+- import file (collection of tests) from root directory to your Postman
+    ```
+    library-test.postman_collection.json
+    ```
 - create a new environment (tests will store variables in it for exchanging information)
 - run the tests
+#### If you're running services in a Docker container, please note that the [docker-compose.yml](docker-compose.yml) uses localization. For tests to run correctly, it must match the localization of the environment where Postman is running:
+    environment:
+      TZ: Europe/Moscow
 
-The auth-service, user-service, and lib-service endpoints can be tested using the Swagger gateway bypassing the Gateway (without checking the jwt token):
-- http://localhost:8083/auth-service/swagger-ui/index.html#/
-- http://localhost:8082/user-service/swagger-ui/index.html#/
-- http://localhost:8081/lib-service/swagger-ui/index.html#/
+### Swagger
+
+The auth-service, user-service, and lib-service endpoints can be tested using Swagger, bypassing the Gateway service (which validates the JWT token):
+- http://localhost:8083/auth-service/swagger-ui/index.html#/ When using Docker, port 8083 should not be committed in [docker-compose.yml].
+- http://localhost:8082/user-service/swagger-ui/index.html#/ When using Docker, port 8082 should not be committed in [docker-compose.yml].
+- http://localhost:8081/lib-service/swagger-ui/index.html#/ When using Docker, port 8081 should not be committed in [docker-compose.yml].
